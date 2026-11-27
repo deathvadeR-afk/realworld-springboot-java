@@ -59,6 +59,29 @@ public class ArticleContents {
         updateRequest.getBodyToUpdate().ifPresent(bodyToUpdate -> body = bodyToUpdate);
     }
 
+    public static String excerpt(String body, int maxLength) {
+        if (maxLength < 1) {
+            throw new IllegalArgumentException("maxLength must be at least 1");
+        }
+        if (body.length() <= maxLength) {
+            return body;
+        }
+        final String span = body.substring(0, maxLength);
+        int cutAt = maxLength;
+        for (int i = span.length() - 1; i >= 0; i--) {
+            if (Character.isWhitespace(span.charAt(i))) {
+                cutAt = i;
+                break;
+            }
+        }
+        final String kept = body.substring(0, cutAt);
+        int end = kept.length();
+        while (end > 0 && Character.isWhitespace(kept.charAt(end - 1))) {
+            end--;
+        }
+        return kept.substring(0, end) + "...";
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
