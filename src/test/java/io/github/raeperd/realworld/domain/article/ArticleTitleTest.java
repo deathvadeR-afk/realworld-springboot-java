@@ -36,4 +36,34 @@ class ArticleTitleTest {
                 .isEqualTo(articleTitle)
                 .hasSameHashCodeAs(articleTitle);
     }
+
+    @Test
+    void when_title_ends_with_question_mark_expect_slug_without_trailing_dash() {
+        var title = "Hello World?";
+        var slugExpected = "hello-world";
+
+        var articleTitle = ArticleTitle.of(title);
+
+        assertThat(articleTitle.getSlug()).isEqualTo(slugExpected);
+    }
+
+    @Test
+    void when_title_ends_with_spaces_expect_slug_without_trailing_dash() {
+        var title = "Hello World  ";
+        var slugExpected = "hello-world";
+
+        var articleTitle = ArticleTitle.of(title);
+
+        assertThat(articleTitle.getSlug()).isEqualTo(slugExpected);
+    }
+
+    @Test
+    void when_title_mixes_whitespace_and_punctuation_expect_slug_without_trailing_dash() {
+        var title = "\n\n Some?\t\n Title  .";
+        var slugExpected = "some-title";
+
+        var articleTitle = ArticleTitle.of(title);
+
+        assertThat(articleTitle.getSlug()).isEqualTo(slugExpected);
+    }
 }
