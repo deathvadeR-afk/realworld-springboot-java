@@ -29,6 +29,7 @@ public class ArticleTitle {
         return title.toLowerCase()
                 .replaceAll("\\$,'\"|\\s|\\.|\\?", "-")
                 .replaceAll("-{2,}", "-")
+                .replaceAll("(-$)", "")
                 .replaceAll("(^-)", "");
     }
 
