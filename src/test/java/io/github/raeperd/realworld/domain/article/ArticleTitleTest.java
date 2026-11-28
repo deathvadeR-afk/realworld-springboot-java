@@ -7,6 +7,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ArticleTitleTest {
 
     @Test
+    void when_title_ends_with_question_mark_expect_slug_without_trailing_dash() {
+        var articleTitle = ArticleTitle.of("Hello World?");
+
+        assertThat(articleTitle.getSlug()).isEqualTo("hello-world");
+    }
+
+    @Test
+    void when_title_ends_with_space_expect_slug_without_trailing_dash() {
+        var articleTitle = ArticleTitle.of("Hello World ");
+
+        assertThat(articleTitle.getSlug()).isEqualTo("hello-world");
+    }
+
+    @Test
+    void when_title_has_leading_and_trailing_noise_expect_slug_cleaned_at_both_ends() {
+        var articleTitle = ArticleTitle.of("\n\n Some?\t\n Title  .");
+
+        assertThat(articleTitle.getSlug()).isEqualTo("some-title");
+    }
+
+    @Test
     void when_create_with_title_expect_valid_slug() {
         var title = "\n\n Some?\t\n Title  .";
         var slugExpected = "some-title";
