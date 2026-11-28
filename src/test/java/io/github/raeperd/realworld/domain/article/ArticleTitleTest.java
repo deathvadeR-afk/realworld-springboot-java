@@ -36,4 +36,18 @@ class ArticleTitleTest {
                 .isEqualTo(articleTitle)
                 .hasSameHashCodeAs(articleTitle);
     }
+
+    @Test
+    void when_title_ends_with_question_mark_expect_slug_without_trailing_dash() {
+        var articleTitle = ArticleTitle.of("Hello World?");
+
+        assertThat(articleTitle.getSlug()).isEqualTo("hello-world");
+    }
+
+    @Test
+    void when_title_ends_with_spaces_expect_slug_without_trailing_dash() {
+        var articleTitle = ArticleTitle.of("Hello World   ");
+
+        assertThat(articleTitle.getSlug()).isEqualTo("hello-world");
+    }
 }
